@@ -1,4 +1,4 @@
-# Symphony Books Manager
+# Symfony Books Manager
 
 **Projeto de estudo do Symfony** com foco em **Clean Architecture** e boas práticas de desenvolvimento.
 
