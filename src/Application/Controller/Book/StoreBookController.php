@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Controller\Book;
+namespace App\Application\Controller\Book;
 
-use App\Action\Book\CreateBookAction;
-use App\Dto\Book\StoreBookInputDto;
+use App\Application\Actions\Book\CreateBookAction;
+use App\Application\Dto\Book\StoreBookInputDto;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;

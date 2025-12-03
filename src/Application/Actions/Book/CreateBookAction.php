@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Action\Book;
+namespace App\Application\Actions\Book;
 
-use App\Dto\Book\StoreBookInputDto;
-use App\Dto\Book\StoreBookOutputDto;
+use App\Application\Dto\Book\StoreBookInputDto;
+use App\Application\Dto\Book\StoreBookOutputDto;
 
 class CreateBookAction
 {
