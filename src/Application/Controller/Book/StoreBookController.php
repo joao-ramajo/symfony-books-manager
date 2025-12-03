@@ -3,7 +3,8 @@
 namespace App\Application\Controller\Book;
 
 use App\Application\Actions\Book\CreateBookAction;
-use App\Application\Dto\Book\StoreBookInputDto;
+use App\Application\Http\Requests\Book\StoreBookRequest;
+use App\Infra\Mappers\BookMapper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
@@ -17,8 +18,10 @@ class StoreBookController extends AbstractController
 
     #[Route('/books', name: 'store.books', methods: ['POST'])]
     public function handle(
-        #[MapRequestPayload] StoreBookInputDto $bookDto
+        #[MapRequestPayload] StoreBookRequest $bodyRequest
     ): JsonResponse {
+        $bookDto = BookMapper::fromRequestToDto($bodyRequest);
+
         $result = $this->createBookAction->execute($bookDto);
 
         return $this->json([

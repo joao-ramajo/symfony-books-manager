@@ -2,7 +2,9 @@
 
 namespace App\Application\Dto\Book;
 
+use App\Entity\Book;
 use Symfony\Component\Validator\Constraints as Assert;
+use DateTime;
 
 class StoreBookOutputDto
 {
@@ -16,7 +18,6 @@ class StoreBookOutputDto
      * @param bool $national
      */
     public function __construct(
-
         #[Assert\NotBlank]
         #[Assert\Type('integer')]
         public readonly int $id,
@@ -29,19 +30,12 @@ class StoreBookOutputDto
         public readonly ?string $description = null,
 
         #[Assert\NotBlank]
-        #[Assert\All([
-            new Assert\Type('string'),
-            new Assert\NotBlank
-        ])]
-        public readonly array $authors,
+        #[Assert\Type('string')]
+        public readonly string $authors,
 
         #[Assert\NotBlank]
-        #[Assert\Type('array')]
-        #[Assert\All([
-            new Assert\Type('string'),
-            new Assert\NotBlank
-        ])]
-        public readonly array $genders,
+        #[Assert\Type('string')]
+        public readonly string $genders,
 
         #[Assert\NotBlank]
         #[Assert\Type('string')]
@@ -50,5 +44,23 @@ class StoreBookOutputDto
         // #[Assert\NotBlank]
         #[Assert\Type('boolean')]
         public readonly bool $national,
+
+        public readonly DateTime $created_at,
+        public readonly DateTime $updated_at,
     ) {}
+
+    public static function fromEntity(Book $book): Self
+    {
+        return new Self(
+            id: $book->getId(),
+            title: trim($book->getTitle()),
+            description: $book->getDescription() ? $book->getDescription() : null,
+            authors: $book->getAuthors(),
+            genders: $book->getGenders(),
+            publisher: trim($book->getPublisher()),
+            national: $book->isNational(),
+            created_at: $book->getCreatedAt(),
+            updated_at: $book->getUpdatedAt(),
+        );
+    }
 }
