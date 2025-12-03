@@ -52,4 +52,11 @@ class BookRepository extends ServiceEntityRepository
 
         return new Paginator($query);
     }
+
+    public function delete(Book $book): void
+    {
+        $em = $this->getEntityManager();
+        $em->remove($book);
+        $em->flush();
+    }
 }

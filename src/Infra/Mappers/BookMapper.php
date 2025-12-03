@@ -4,11 +4,12 @@ namespace App\Infra\Mappers;
 
 use App\Application\Dto\Book\StoreBookInputDto;
 use App\Application\Http\Requests\Book\StoreBookRequest;
+use App\Application\Http\Requests\Book\UpdateBookRequest;
 use App\Entity\Book;
 
 class BookMapper
 {
-    public static function fromRequestToDto(StoreBookRequest $request): StoreBookInputDto
+    public static function fromRequestToDto(StoreBookRequest|UpdateBookRequest $request): StoreBookInputDto
     {
         return new StoreBookInputDto(
             title: trim($request->title),

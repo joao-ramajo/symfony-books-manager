@@ -33,7 +33,6 @@ class StoreBookRequest
         #[Assert\Type('string')]
         public readonly string $publisher,
 
-        // #[Assert\NotBlank]
         #[Assert\Type('boolean')]
         public readonly bool $national,
     ) {}
