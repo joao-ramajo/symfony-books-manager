@@ -889,6 +889,13 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     enable_profiler?: bool, // Whether or not to enable the profiler collector to calculate and visualize migration status. This adds some queries overhead. // Default: false
  *     transactional?: bool, // Whether or not to wrap migrations in a single transaction. // Default: true
  * }
+ * @psalm-type DebugConfig = array{
+ *     max_items?: int, // Max number of displayed items past the first level, -1 means no limit. // Default: 2500
+ *     min_depth?: int, // Minimum tree depth to clone all the items, 1 is default. // Default: 1
+ *     max_string_length?: int, // Max length of displayed strings, -1 means no limit. // Default: -1
+ *     dump_destination?: scalar|null, // A stream URL where dumps should be written to. // Default: null
+ *     theme?: "dark"|"light", // Changes the color of the dump() output when rendered directly on the templating. "dark" (default) or "light". // Default: "dark"
+ * }
  * @psalm-type TwigConfig = array{
  *     form_themes?: list<scalar|null>,
  *     globals?: array<string, array{ // Default: []
@@ -1441,17 +1448,38 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         },
  *     }>,
  * }
- * @psalm-type DebugConfig = array{
- *     max_items?: int, // Max number of displayed items past the first level, -1 means no limit. // Default: 2500
- *     min_depth?: int, // Minimum tree depth to clone all the items, 1 is default. // Default: 1
- *     max_string_length?: int, // Max length of displayed strings, -1 means no limit. // Default: -1
- *     dump_destination?: scalar|null, // A stream URL where dumps should be written to. // Default: null
- *     theme?: "dark"|"light", // Changes the color of the dump() output when rendered directly on the templating. "dark" (default) or "light". // Default: "dark"
- * }
  * @psalm-type MakerConfig = array{
  *     root_namespace?: scalar|null, // Default: "App"
  *     generate_final_classes?: bool, // Default: true
  *     generate_final_entities?: bool, // Default: false
+ * }
+ * @psalm-type NelmioCorsConfig = array{
+ *     defaults?: array{
+ *         allow_credentials?: bool, // Default: false
+ *         allow_origin?: list<scalar|null>,
+ *         allow_headers?: list<scalar|null>,
+ *         allow_methods?: list<scalar|null>,
+ *         allow_private_network?: bool, // Default: false
+ *         expose_headers?: list<scalar|null>,
+ *         max_age?: scalar|null, // Default: 0
+ *         hosts?: list<scalar|null>,
+ *         origin_regex?: bool, // Default: false
+ *         forced_allow_origin_value?: scalar|null, // Default: null
+ *         skip_same_as_origin?: bool, // Default: true
+ *     },
+ *     paths?: array<string, array{ // Default: []
+ *         allow_credentials?: bool,
+ *         allow_origin?: list<scalar|null>,
+ *         allow_headers?: list<scalar|null>,
+ *         allow_methods?: list<scalar|null>,
+ *         allow_private_network?: bool,
+ *         expose_headers?: list<scalar|null>,
+ *         max_age?: scalar|null, // Default: 0
+ *         hosts?: list<scalar|null>,
+ *         origin_regex?: bool,
+ *         forced_allow_origin_value?: scalar|null, // Default: null
+ *         skip_same_as_origin?: bool,
+ *     }>,
  * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
@@ -1466,6 +1494,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     twig_extra?: TwigExtraConfig,
  *     security?: SecurityConfig,
  *     monolog?: MonologConfig,
+ *     nelmio_cors?: NelmioCorsConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1482,6 +1511,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
  *         maker?: MakerConfig,
+ *         nelmio_cors?: NelmioCorsConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1496,6 +1526,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
+ *         nelmio_cors?: NelmioCorsConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1511,6 +1542,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
+ *         nelmio_cors?: NelmioCorsConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
