@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ShowBookController extends AbstractController
 {
-    #[Route('/books/{id}', name: 'list.books', methods: ['GET', 'HEAD'])]
+    #[Route('/books/{id}', name: 'show.books', methods: ['GET', 'HEAD'])]
     public function handle(Book $book)
     {
         return $this->json([
